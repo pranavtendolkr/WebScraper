@@ -1,5 +1,6 @@
 '''
 Scrapes images and other data  of current MPs in the cabinet
+from the url http://164.100.47.132/LssNew/Members/Statewiselist.aspx
 
 uses the foll libraries
 requests
