@@ -41,6 +41,7 @@ def query():
 
             ##write code to associate with MP
 
+
             print(code)
             resp=BeautifulSoup(requests.get(url).text)
             # print(resp)
