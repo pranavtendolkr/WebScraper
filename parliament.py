@@ -2,20 +2,22 @@
 Scrapes images and other data  of current MPs in the cabinet
 
 uses the foll libraries
-reuests
+requests
 BeautifulSoup
 PIL(Wand)
 StringIO
 '''
 import base64
 
-__author__ = 'Pranav'
+__author__ = 'Pranav Tendolkar'
 
 import  requests
 from bs4 import BeautifulSoup
 import re
 from PIL import Image, ImageChops
 import io
+#python 2.x
+#import cStringIO
 
 
 states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
@@ -23,9 +25,11 @@ states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh
           'Meghalaya', 'Mizoram', 'Nagaland','Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh',
           'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi',
           'Lakshadweep', 'Puducherry']
+stateurl='http://164.100.47.132/LssNew/Members/statedetail.aspx'
+imageurl='http://164.100.47.132/mpimage/photo/'
 
 def query():
-    stateurl='http://164.100.47.132/LssNew/Members/statedetail.aspx'
+
 
     for state in states:
         param={'state_code':state}
@@ -46,7 +50,6 @@ def query():
             resp=BeautifulSoup(requests.get(url).text)
             # print(resp)
             member={}
-            imageurl='http://164.100.47.132/mpimage/photo/4143.jpg'
             break
 
         break
@@ -54,8 +57,8 @@ def query():
 
 
 def getimage(code):
-    imageurl='http://164.100.47.132/mpimage/photo/'+code+'.jpg'
-    r=requests.get(imageurl)
+    full_imageurl=imageurl+code+'.jpg'
+    r=requests.get(full_imageurl)
 
     if r.status_code ==200:
         r.raw.decode_content = True
@@ -74,7 +77,7 @@ def getimage(code):
         imgStr = base64.b64encode(jpeg_image_buffer.getvalue())
 
         #Testing
-        # fh = open("imageToSave.jpg", "wb")
+        # fh = open("decoded.jpg", "wb")
         # fh.write(base64.decodestring(imgStr))
         # fh.close()
         return imgStr
